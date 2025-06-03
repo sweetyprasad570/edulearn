@@ -1,0 +1,1123 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EduLearn - Online Education Platform</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        font-family: "Georgia", serif;
+        scroll-behavior: smooth;
+        background-color: #f5f5f5;
+      }
+
+      header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background-color: #0066cc;
+        color: white;
+        padding: 10px 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 999;
+        gap: 5px;
+  overflow-x: auto;
+      }
+      
+  
+.logo-container {
+  flex: 1;
+  min-width: 200px;
+}
+
+nav.navbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  flex: 1;
+  overflow: visible;
+}
+
+
+  .logo-container {
+        display: flex;
+        align-items: center;
+      }
+
+      .logo-container img {
+        height: 50px;
+        margin-right: 15px;
+      }
+
+      nav a {
+        color: white;
+        margin: 0 5px;
+        font-size: 15px;  /* Smaller font */
+        padding: 8px 12px;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      nav a:hover {
+        text-decoration: underline;
+        color: #cce6ff;
+      }
+
+      main {
+        margin-top: 100px;
+      }
+
+      /* Section Styling & Animations */
+      section {
+        height: 100vh;
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        box-sizing: border-box;
+        text-align: center;
+        animation: fadeInUp 0.8s ease forwards;
+        opacity: 0;
+      }
+
+      section.active {
+        display: flex;
+        opacity: 1;
+      }
+
+      @keyframes fadeInUp {
+        0% {
+          opacity: 0;
+          transform: translateY(40px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Section Backgrounds */
+      #notes {
+        background: linear-gradient(to right, #f0f8ff, #e6f7ff);
+      }
+
+      #about-ml {
+        background: linear-gradient(to right, #fff5e6, #ffe6cc);
+      }
+
+      #quiz {
+        background: linear-gradient(to right, #e6ffe6, #ccffcc);
+      }
+
+      #assignments {
+        background: linear-gradient(to right, #fce4ec, #f8bbd0);
+      }
+
+      #certificate-section {
+        background: linear-gradient(to right, #ede7f6, #d1c4e9);
+      }
+
+      h2 {
+        font-size: 30px;
+        margin-bottom: 0px;
+        position: relative;
+        display: inline-block;
+      }
+
+      h2::after {
+        content: "";
+        position: absolute;
+        width: 60%;
+        height: 4px;
+        background-color: #0066cc;
+        left: 0;
+        bottom: -8px;
+        border-radius: 2px;
+        transition: width 0.3s;
+      }
+
+      section:hover h2::after {
+        width: 100%;
+      }
+
+      ul li a {
+        color: #0066cc;
+      }
+
+      details summary {
+        cursor: pointer;
+        font-weight: bold;
+        margin: 10px 0;
+      }
+
+      .notes-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 40px;
+        justify-content: space-around;
+        align-items: flex-start;
+        width: 100%;
+        margin-top: 20px;
+      }
+
+      .notes-download,
+      .notes-preview {
+        flex: 1 1 45%;
+        min-width: 300px;
+      }
+
+      .notes-download ul {
+        list-style-position: inside;
+        padding-left: 0;
+        margin: 0;
+      }
+
+      .notes-download li {
+        margin: 6px 0;
+        font-size: 16px;
+      }
+
+      .notes-preview details,
+      .notes-download li a,
+      .notes-preview pre,
+      #about-ml details,
+      .question {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .notes-preview details:hover,
+      .notes-download li a:hover,
+      #about-ml details:hover,
+      .question:hover {
+        transform: scale(1.02);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      pre {
+        background: #f2f2f2;
+        padding: 10px;
+        border-radius: 5px;
+        overflow-x: auto;
+      }
+
+      .question {
+        margin-bottom: 15px;
+        text-align: left;
+      }
+
+      #quiz-result,
+      #ml-quiz-result {
+        font-weight: bold;
+        color: #006600;
+        margin-top: 10px;
+      }
+
+      input[type="text"],
+      input[type="file"] {
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 5px;
+        width: 300px;
+        margin-top: 10px;
+      }
+
+      button {
+        padding: 12px 24px;
+        font-size: 16px;
+        background-color: #0066cc;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        margin: 10px;
+        transition: background-color 0.3s, transform 0.3s;
+        animation: bounceIn 0.5s ease;
+      }
+
+      button:hover {
+        background-color: #004d99;
+        transform: scale(1.05);
+      }
+
+      @keyframes bounceIn {
+        0% {
+          transform: scale(0.8);
+          opacity: 0;
+        }
+        60% {
+          transform: scale(1.05);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .certificate-container {
+        max-width: 800px;
+        padding: 50px 30px;
+        border: 12px double #d4af37;
+        border-radius: 20px;
+        background: linear-gradient(135deg, #fffefa, #f0f8ff);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        text-align: center;
+      }
+
+      .certificate-title {
+        font-size: 38px;
+        font-weight: bold;
+        color: #d4af37;
+        text-shadow: 0 0 8px rgba(212, 175, 55, 0.6);
+        margin-bottom: 25px;
+      }
+
+      .certificate-name {
+        font-size: 28px;
+        margin: 20px 0;
+        font-style: italic;
+        color: #003366;
+      }
+
+      .certificate-footer {
+        font-size: 16px;
+        color: #444;
+        margin-top: 30px;
+      }
+
+      .seal-img {
+        width: 100px;
+        margin-top: 30px;
+      }
+
+      .nav-buttons {
+        margin-top: 30px;
+      }
+@media (max-width: 768px) {
+  .logo-container h1 {
+    font-size: 18px;
+  }
+
+  nav.navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+
+
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="logo-container">
+        <img
+          src="C:\Users\Lenovo\Downloads\EduLearn Logo.png"
+          alt="EduLearn Logo"
+        />
+        <h1>EduLearn - Online Learning Platform</h1>
+      </div>
+      <nav>
+        <a href="#notes">Notes</a>
+        <a href="#about-ml">About ML</a>
+        <a href="#quiz">Quiz</a>
+        <a href="#assignments">Assignments</a>
+        <a href="#certificate-section">Certificate</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- Notes Section -->
+      <section id="notes">
+        <h2>📘 Notes</h2>
+
+        <div class="notes-container">
+          <!-- Notes Preview (Left Side) -->
+          <div class="notes-preview">
+            <h1>📄 Notes Preview</h1>
+
+            <details>
+              <summary>HTML Notes</summary>
+              <pre>
+- HTML = HyperText Markup Language
+- Tags: &lt;html&gt;, &lt;body&gt;, &lt;p&gt;, &lt;a&gt;
+- HTML5: &lt;section&gt;, &lt;article&gt;, &lt;header&gt;
+        </pre
+              >
+            </details>
+
+            <details>
+              <summary>CSS Notes</summary>
+              <pre>
+- CSS = Cascading Style Sheets
+- Selectors: class, id, element
+- Flexbox / Grid for layout
+        </pre
+              >
+            </details>
+
+            <details>
+              <summary>JavaScript Notes</summary>
+              <pre>
+- JS for interactivity
+- DOM, Events, ES6+, Functions, Arrays
+        </pre
+              >
+            </details>
+
+            <details>
+              <summary>Python Notes</summary>
+              <pre>
+- Easy syntax, indentation-based
+- Variables, Loops, Functions, Libraries
+- Popular for data science and AI
+        </pre
+              >
+            </details>
+
+            <details>
+              <summary>Java Notes</summary>
+              <pre>
+- Object-oriented language
+- Classes, Inheritance, JVM
+- Used in Android & enterprise apps
+        </pre
+              >
+            </details>
+
+            <details>
+              <summary>C++ Notes</summary>
+              <pre>
+- Compiled, statically typed
+- Supports OOP
+- Used in system-level programming
+        </pre
+              >
+            </details>
+
+            <details>
+              <summary>Machine Learning Notes</summary>
+              <pre>
+- Machine Learning enables systems to learn from data.
+- Supervised, Unsupervised, Reinforcement Learning.
+- Popular libraries: Scikit-learn, TensorFlow, PyTorch.
+        </pre
+              >
+            </details>
+          </div>
+
+          <!-- Download Notes (Right Side) -->
+          <div class="notes-download">
+            <h1>📥 Download Notes</h1>
+            <ul>
+              <li>
+                <a href="C:\Users\Lenovo\Downloads\HTML Notes.pdf" download
+                  >HTML Notes</a
+                >
+              </li>
+              <li>
+                <a href="C:\Users\Lenovo\Downloads\CSS Notes.pdf" download
+                  >CSS Notes</a
+                >
+              </li>
+              <li>
+                <a
+                  href="C:\Users\Lenovo\Downloads\JavaScript Notes.pdf"
+                  download
+                  >JavaScript Notes</a
+                >
+              </li>
+              <li>
+                <a
+                  href="C:\Users\Lenovo\Downloads\python notes .pdf"
+                  download
+                  >Python Notes</a
+                >
+              </li>
+              <li>
+                <a href="C:\Users\Lenovo\Downloads\java notes .pdf" download
+                  >Java Notes</a
+                >
+              </li>
+              <li>
+                <a href="C:\Users\Lenovo\Downloads\C++ notes .pdf" download
+                  >C++ Notes</a
+                >
+              </li>
+              <li>
+                <a
+                  href="C:\Users\Lenovo\Downloads\ml notes.pdf"
+                  download
+                  >ML Notes</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <section id="about-ml">
+        <h2>🤖 Machine Learning Overview</h2>
+
+        <details open>
+          <summary>📚 About Machine Learning</summary>
+          <p>
+            Machine Learning (ML) is a branch of Artificial Intelligence (AI)
+            that enables computers to learn from data and make decisions or
+            predictions without being explicitly programmed.
+          </p>
+        </details>
+
+        <details>
+          <summary>📖 Types of Machine Learning</summary>
+          <ul>
+            <li>
+              <strong>Supervised Learning:</strong> Learns from labeled data.
+            </li>
+            <li>
+              <strong>Unsupervised Learning:</strong> Discovers hidden patterns
+              in unlabeled data.
+            </li>
+            <li>
+              <strong>Reinforcement Learning:</strong> Learns through trial and
+              error using rewards and punishments.
+            </li>
+          </ul>
+        </details>
+
+        <details>
+          <summary>🌍 Real-World Applications</summary>
+          <ul>
+            <li>Spam Detection</li>
+            <li>Voice Assistants</li>
+            <li>Self-driving Cars</li>
+            <li>Recommendation Systems (e.g., Netflix, Amazon)</li>
+            <li>Fraud Detection</li>
+          </ul>
+        </details>
+
+        <details>
+          <summary>🧾 ML Platforms Comparison Table</summary>
+          <table border="1" cellpadding="10" style="border-collapse: collapse">
+            <thead>
+              <tr>
+                <th>Platform</th>
+                <th>Features</th>
+                <th>Best For</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Google Cloud AI</td>
+                <td>AutoML, TensorFlow support</td>
+                <td>Scalable deep learning</td>
+              </tr>
+              <tr>
+                <td>Amazon SageMaker</td>
+                <td>Model building, tuning, deployment</td>
+                <td>Integrated AWS workflows</td>
+              </tr>
+              <tr>
+                <td>Microsoft Azure ML</td>
+                <td>Drag-and-drop interface</td>
+                <td>Beginner-friendly</td>
+              </tr>
+            </tbody>
+          </table>
+        </details>
+
+        <details>
+          <summary>🧪 Machine Learning Quiz</summary>
+          <form id="ml-quiz-form">
+            <div class="question">
+              <p>1. What is the primary goal of supervised learning?</p>
+              <label
+                ><input type="radio" name="mlq1" value="correct" /> Predict
+                output from labeled data</label
+              ><br />
+              <label
+                ><input type="radio" name="mlq1" value="wrong" /> Explore data
+                without any labels</label
+              >
+            </div>
+
+            <div class="question">
+              <p>2. Which algorithm is used for classification problems?</p>
+              <label
+                ><input type="radio" name="mlq2" value="correct" /> Logistic
+                Regression</label
+              ><br />
+              <label
+                ><input type="radio" name="mlq2" value="wrong" /> K-Means</label
+              >
+            </div>
+
+            <div class="question">
+              <p>3. Which ML type uses rewards to learn?</p>
+              <label
+                ><input type="radio" name="mlq3" value="correct" />
+                Reinforcement Learning</label
+              ><br />
+              <label
+                ><input type="radio" name="mlq3" value="wrong" /> Supervised
+                Learning</label
+              >
+            </div>
+
+            <button type="button" onclick="checkMLQuiz()">
+              Submit ML Quiz
+            </button>
+            <p id="ml-quiz-result"></p>
+          </form>
+        </details>
+      </section>
+
+      <!-- Quiz Section -->
+      <section id="quiz">
+        <h2>📝 HTML Quiz</h2>
+        <form id="quiz-form">
+          <div class="question">
+            <p>1. What does HTML stand for?</p>
+            <label
+              ><input type="radio" name="q1" value="correct" /> HyperText Markup
+              Language</label
+            ><br />
+            <label
+              ><input type="radio" name="q1" value="wrong" /> HighText Machine
+              Language</label
+            >
+          </div>
+
+          <div class="question">
+            <p>2. Which tag is used to create a hyperlink?</p>
+            <label
+              ><input type="radio" name="q2" value="wrong" />
+              &lt;link&gt;</label
+            ><br />
+            <label
+              ><input type="radio" name="q2" value="correct" /> &lt;a&gt;</label
+            >
+          </div>
+
+          <div class="question">
+            <p>3. Which tag is used to insert an image in HTML?</p>
+            <label
+              ><input type="radio" name="q3" value="correct" />
+              &lt;img&gt;</label
+            ><br />
+            <label
+              ><input type="radio" name="q3" value="wrong" />
+              &lt;image&gt;</label
+            >
+          </div>
+
+          <div class="question">
+            <p>
+              4. What is the correct HTML element for inserting a line break?
+            </p>
+            <label
+              ><input type="radio" name="q4" value="correct" />
+              &lt;br&gt;</label
+            ><br />
+            <label
+              ><input type="radio" name="q4" value="wrong" />
+              &lt;break&gt;</label
+            >
+          </div>
+
+          <div class="question">
+            <p>5. Which HTML element defines the document title?</p>
+            <label
+              ><input type="radio" name="q5" value="correct" />
+              &lt;title&gt;</label
+            ><br />
+            <label
+              ><input type="radio" name="q5" value="wrong" />
+              &lt;head&gt;</label
+            >
+          </div>
+
+          <button type="button" onclick="checkQuiz()">Submit Quiz</button>
+          <p id="quiz-result"></p>
+        </form>
+      </section>
+
+      <!-- Assignment Section -->
+      <section id="assignments">
+        <h2>📤 Submit Assignment</h2>
+        <form id="assignment-form" enctype="multipart/form-data">
+          <label>Upload Your Assignment (PDF only):</label><br />
+          <input
+            type="file"
+            name="assignment"
+            accept=".pdf"
+            required
+          /><br /><br />
+          <button type="submit">Submit Assignment</button>
+        </form>
+      </section>
+
+      <section id="certificate-section">
+        <h2>🏆 Generate Certificate</h2>
+        <div id="generate-section">
+          <input type="text" id="username" placeholder="Enter your full name" />
+          <button onclick="generateCertificate()">Generate Certificate</button>
+        </div>
+        <div id="certificate-area"></div>
+      </section>
+    </main>
+
+    <script>
+      function checkQuiz() {
+        const q1 = document.querySelector('input[name="q1"]:checked');
+        const q2 = document.querySelector('input[name="q2"]:checked');
+        const q3 = document.querySelector('input[name="q3"]:checked');
+        const q4 = document.querySelector('input[name="q4"]:checked');
+        const q5 = document.querySelector('input[name="q5"]:checked');
+        let score = 0;
+        if (q1 && q1.value === "correct") score++;
+        if (q2 && q2.value === "correct") score++;
+        if (q3 && q3.value === "correct") score++;
+        if (q4 && q4.value === "correct") score++;
+        if (q5 && q5.value === "correct") score++;
+
+        const result = document.getElementById("quiz-result");
+        result.textContent = `You scored ${score} out of 5`;
+        result.classList.add("show");
+        setTimeout(() => result.classList.remove("show"), 1000);
+      }
+
+      function generateCertificate() {
+        const name = document.getElementById("username").value.trim();
+        const area = document.getElementById("certificate-area");
+        if (!name) {
+          alert("Please enter your name.");
+          return;
+        }
+
+        area.innerHTML = `
+    <div class="certificate-container" id="certificate">
+  <div class="certificate-title">Certificate of Completion</div>
+
+  <div style="font-size: 18px; margin-bottom: 10px;">
+    This is to certify that
+  </div>
+
+  <div class="certificate-name">${name}</div>
+
+  <div style="font-size: 18px; margin: 10px 0 20px;">
+    has successfully completed the
+  </div>
+
+  <div style="font-size: 22px; font-weight: bold; color: #0066cc; margin-bottom: 10px;">
+    EduLearn Web Development Course
+  </div>
+
+  <div style="font-size: 16px; max-width: 600px; margin: 0 auto 30px; line-height: 1.6;">
+    This course covered foundational and advanced topics in HTML, CSS, and JavaScript, equipping learners with the essential skills to build responsive, interactive websites and user interfaces.
+  </div>
+
+  <img src="https://static.vecteezy.com/system/resources/thumbnails/013/195/634/small/premium-quality-badge-with-blue-and-gold-color-png.png" class="seal-img" alt="Seal" />
+
+  <div class="certificate-footer">
+    Issued by EduLearn • 2025<br />
+    Certificate ID: EDU-${Math.floor(Math.random() * 1000000)}
+  </div>
+      <div><button onclick="downloadCertificateImage()">Download Image</button></div>
+    </div>
+  `;
+
+        // 👉 Show the certificate slide
+        const certificateIndex = Array.from(sections).findIndex(
+          (s) => s.id === "certificate-section"
+        );
+        if (certificateIndex !== -1) {
+          showSlide(certificateIndex);
+        }
+      }
+
+      async function downloadCertificateImage() {
+        const element = document.getElementById("certificate");
+        if (!element) return;
+        element
+          .querySelectorAll("button")
+          .forEach((btn) => (btn.style.display = "none"));
+
+        const canvas = await html2canvas(element, {
+          windowWidth: element.scrollWidth,
+          windowHeight: element.scrollHeight,
+          scrollY: -window.scrollY,
+          useCORS: true,
+        });
+
+        element
+          .querySelectorAll("button")
+          .forEach((btn) => (btn.style.display = "inline-block"));
+
+        const imgData = canvas.toDataURL("image/png");
+        const link = document.createElement("a");
+        link.href = imgData;
+        link.download = "certificate.png";
+        link.click();
+      }
+
+      // Assignment submission feedback
+      document
+        .getElementById("assignment-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          alert("Assignment submitted successfully!");
+        });
+    </script>
+    <!-- Your full code stays the same up to this point -->
+
+    <script>
+      // Wrap all section elements in a div to treat them as slides
+      const section = document.querySelectorAll("main > section");
+      sections.forEach((section, index) => {
+        section.classList.add("section-slide");
+        if (index === 0) section.classList.add("active");
+
+        // Add nav buttons only to visible sections
+        const nav = document.createElement("div");
+        nav.className = "nav-buttons";
+
+        if (index > 0) {
+          const prevBtn = document.createElement("button");
+          prevBtn.textContent = "⬅️Previous";
+          prevBtn.onclick = () => showSlide(index - 1);
+          nav.appendChild(prevBtn);
+        }
+
+        if (index < sections.length - 1) {
+          const nextBtn = document.createElement("button");
+          nextBtn.textContent = "➡️Next";
+          nextBtn.onclick = () => showSlide(index + 1);
+          nav.appendChild(nextBtn);
+        }
+
+        section.appendChild(nav);
+      });
+
+      function showSlide(index) {
+        sections.forEach((sec, i) => {
+          sec.classList.remove("active");
+          if (i === index) sec.classList.add("active");
+        });
+      }
+
+      // ✅ FIX: Enable nav link clicks to show the corresponding section
+      document.querySelectorAll("nav a").forEach((link) => {
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+          const targetId = this.getAttribute("href").substring(1); // remove #
+          const targetIndex = Array.from(sections).findIndex(
+            (sec) => sec.id === targetId
+          );
+          if (targetIndex !== -1) {
+            showSlide(targetIndex);
+            window.scrollTo({ top: 0, behavior: "smooth" }); // optional scroll to top
+          }
+        });
+      });
+    </script>
+    <script>
+      function checkMLQuiz() {
+        let correct = 0;
+        const total = 3;
+        const answers = document.querySelectorAll(
+          '#ml-quiz-form input[type="radio"]:checked'
+        );
+        answers.forEach((ans) => {
+          if (ans.value === "correct") correct++;
+        });
+
+        const result = document.getElementById("ml-quiz-result");
+        result.textContent = `You got ${correct} out of ${total} correct!`;
+        result.style.fontWeight = "bold";
+        result.style.marginTop = "10px";
+      }
+    </script>
+  </body>
+</html>
+
+
+      <!-- Quiz Section -->
+      <section id="quiz">
+        <h2>📝 HTML Quiz</h2>
+        <form id="quiz-form">
+          <div class="question">
+            <p>1. What does HTML stand for?</p>
+            <label
+              ><input type="radio" name="q1" value="correct" /> HyperText Markup
+              Language</label
+            ><br />
+            <label
+              ><input type="radio" name="q1" value="wrong" /> HighText Machine
+              Language</label
+            >
+          </div>
+
+          <div class="question">
+            <p>2. Which tag is used to create a hyperlink?</p>
+            <label
+              ><input type="radio" name="q2" value="wrong" />
+              &lt;link&gt;</label
+            ><br />
+            <label
+              ><input type="radio" name="q2" value="correct" /> &lt;a&gt;</label
+            >
+          </div>
+
+          <div class="question">
+            <p>3. Which tag is used to insert an image in HTML?</p>
+            <label
+              ><input type="radio" name="q3" value="correct" />
+              &lt;img&gt;</label
+            ><br />
+            <label
+              ><input type="radio" name="q3" value="wrong" />
+              &lt;image&gt;</label
+            >
+          </div>
+
+          <div class="question">
+            <p>
+              4. What is the correct HTML element for inserting a line break?
+            </p>
+            <label
+              ><input type="radio" name="q4" value="correct" />
+              &lt;br&gt;</label
+            ><br />
+            <label
+              ><input type="radio" name="q4" value="wrong" />
+              &lt;break&gt;</label
+            >
+          </div>
+
+          <div class="question">
+            <p>5. Which HTML element defines the document title?</p>
+            <label
+              ><input type="radio" name="q5" value="correct" />
+              &lt;title&gt;</label
+            ><br />
+            <label
+              ><input type="radio" name="q5" value="wrong" />
+              &lt;head&gt;</label
+            >
+          </div>
+
+          <button type="button" onclick="checkQuiz()">Submit Quiz</button>
+          <p id="quiz-result"></p>
+        </form>
+      </section>
+
+      <!-- Assignment Section -->
+      <section id="assignments">
+        <h2>📤 Submit Assignment</h2>
+        <form id="assignment-form" enctype="multipart/form-data">
+          <label>Upload Your Assignment (PDF only):</label><br />
+          <input
+            type="file"
+            name="assignment"
+            accept=".pdf"
+            required
+          /><br /><br />
+          <button type="submit">Submit Assignment</button>
+        </form>
+      </section>
+
+      <section id="certificate-section">
+        <h2>🏆 Generate Certificate</h2>
+        <div id="generate-section">
+          <input type="text" id="username" placeholder="Enter your full name" />
+          <button onclick="generateCertificate()">Generate Certificate</button>
+        </div>
+        <div id="certificate-area"></div>
+      </section>
+    </main>
+
+    <script>
+      function checkQuiz() {
+        const q1 = document.querySelector('input[name="q1"]:checked');
+        const q2 = document.querySelector('input[name="q2"]:checked');
+        const q3 = document.querySelector('input[name="q3"]:checked');
+        const q4 = document.querySelector('input[name="q4"]:checked');
+        const q5 = document.querySelector('input[name="q5"]:checked');
+        let score = 0;
+        if (q1 && q1.value === "correct") score++;
+        if (q2 && q2.value === "correct") score++;
+        if (q3 && q3.value === "correct") score++;
+        if (q4 && q4.value === "correct") score++;
+        if (q5 && q5.value === "correct") score++;
+
+        const result = document.getElementById("quiz-result");
+        result.textContent = `You scored ${score} out of 5`;
+        result.classList.add("show");
+        setTimeout(() => result.classList.remove("show"), 1000);
+      }
+
+      function generateCertificate() {
+        const name = document.getElementById("username").value.trim();
+        const area = document.getElementById("certificate-area");
+        if (!name) {
+          alert("Please enter your name.");
+          return;
+        }
+
+        area.innerHTML = `
+    <div class="certificate-container" id="certificate">
+  <div class="certificate-title">Certificate of Completion</div>
+
+  <div style="font-size: 18px; margin-bottom: 10px;">
+    This is to certify that
+  </div>
+
+  <div class="certificate-name">${name}</div>
+
+  <div style="font-size: 18px; margin: 10px 0 20px;">
+    has successfully completed the
+  </div>
+
+  <div style="font-size: 22px; font-weight: bold; color: #0066cc; margin-bottom: 10px;">
+    EduLearn Web Development Course
+  </div>
+
+  <div style="font-size: 16px; max-width: 600px; margin: 0 auto 30px; line-height: 1.6;">
+    This course covered foundational and advanced topics in HTML, CSS, and JavaScript, equipping learners with the essential skills to build responsive, interactive websites and user interfaces.
+  </div>
+
+  <img src="https://static.vecteezy.com/system/resources/thumbnails/013/195/634/small/premium-quality-badge-with-blue-and-gold-color-png.png" class="seal-img" alt="Seal" />
+
+  <div class="certificate-footer">
+    Issued by EduLearn • 2025<br />
+    Certificate ID: EDU-${Math.floor(Math.random() * 1000000)}
+  </div>
+      <div><button onclick="downloadCertificateImage()">Download Image</button></div>
+    </div>
+  `;
+
+        // 👉 Show the certificate slide
+        const certificateIndex = Array.from(sections).findIndex(
+          (s) => s.id === "certificate-section"
+        );
+        if (certificateIndex !== -1) {
+          showSlide(certificateIndex);
+        }
+      }
+
+      async function downloadCertificateImage() {
+        const element = document.getElementById("certificate");
+        if (!element) return;
+        element
+          .querySelectorAll("button")
+          .forEach((btn) => (btn.style.display = "none"));
+
+        const canvas = await html2canvas(element, {
+          windowWidth: element.scrollWidth,
+          windowHeight: element.scrollHeight,
+          scrollY: -window.scrollY,
+          useCORS: true,
+        });
+
+        element
+          .querySelectorAll("button")
+          .forEach((btn) => (btn.style.display = "inline-block"));
+
+        const imgData = canvas.toDataURL("image/png");
+        const link = document.createElement("a");
+        link.href = imgData;
+        link.download = "certificate.png";
+        link.click();
+      }
+
+      // Assignment submission feedback
+      document
+        .getElementById("assignment-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          alert("Assignment submitted successfully!");
+        });
+    </script>
+    <!-- Your full code stays the same up to this point -->
+
+    <script>
+      // Wrap all section elements in a div to treat them as slides
+      const sections = document.querySelectorAll("main > section");
+      sections.forEach((section, index) => {
+        section.classList.add("section-slide");
+        if (index === 0) section.classList.add("active");
+
+        // Add nav buttons only to visible sections
+        const nav = document.createElement("div");
+        nav.className = "nav-buttons";
+
+        if (index > 0) {
+          const prevBtn = document.createElement("button");
+          prevBtn.textContent = "⬅️Previous";
+          prevBtn.onclick = () => showSlide(index - 1);
+          nav.appendChild(prevBtn);
+        }
+
+        if (index < sections.length - 1) {
+          const nextBtn = document.createElement("button");
+          nextBtn.textContent = "➡️Next";
+          nextBtn.onclick = () => showSlide(index + 1);
+          nav.appendChild(nextBtn);
+        }
+
+        section.appendChild(nav);
+      });
+
+      function showSlide(index) {
+        sections.forEach((sec, i) => {
+          sec.classList.remove("active");
+          if (i === index) sec.classList.add("active");
+        });
+      }
+
+      // ✅ FIX: Enable nav link clicks to show the corresponding section
+      document.querySelectorAll("nav a").forEach((link) => {
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+          const targetId = this.getAttribute("href").substring(1); // remove #
+          const targetIndex = Array.from(sections).findIndex(
+            (sec) => sec.id === targetId
+          );
+          if (targetIndex !== -1) {
+            showSlide(targetIndex);
+            window.scrollTo({ top: 0, behavior: "smooth" }); // optional scroll to top
+          }
+        });
+      });
+    </script>
+    <script>
+      function checkMLQuiz() {
+        const mlq1 = document.querySelector('input[name="mlq1"]:checked');
+        const mlq2 = document.querySelector('input[name="mlq2"]:checked');
+        const mlq3 = document.querySelector('input[name="mlq3"]:checked');
+        let score = 0;
+        if (mlq1 && mlq1.value === "correct") score++;
+        if (mlq2 && mlq2.value === "correct") score++;
+        if (mlq3 && mlq3.value === "correct") score++;
+
+        const result = document.getElementById("ml-quiz-result");
+        result.textContent = `You scored ${score} out of 3 in Machine Learning Quiz`;
+        result.classList.add("show");
+        setTimeout(() => result.classList.remove("show"), 1000);
+      }
+    </script>
+  </body>
+</html>
